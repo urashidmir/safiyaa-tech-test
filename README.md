@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Tic-Tac-Toe
 
-First, run the development server:
+## NextJs
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- This is a NextJS App router application. You can see the documentation here: https://nextjs.org/docs/13/app.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- For this test, we do not care about authentication/security, though questions may be asked about how you'd plan to implement such things given more time allowance.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Problems
+### Problem 1
+We want to make a basic game of Tic-Tac-Toe as outlined [here](https://en.wikipedia.org/wiki/Tic-tac-toe) ! 
+- Please implement a complete basic game of Tic-Tac-Toe
+- Please use React and TypeScript throughout, if you know TailwindCSS, we have preconfigured it so you can use it as a bonus.
+- Both players will play out of the same application, it is sufficient to just switch the state of the current player each time a move is played, assume that unless a game is over, at the end of a turn it will ALWAYS be the next players turn.
+- Once a game is completed, I should be able to start another game 
 
-To learn more about Next.js, take a look at the following resources:
+### Problem 2
+We are bored with the basic game now, can you make it so the board can be scaled to any size? 
+- Add some kind of input at the start of the game which allows me to change the board size.
+- The board size should be a number between 3 and 15 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Problem 3
+We want to store information about who is winning each game and finish our leaderboard page.
+- SQLITE3 (https://plainenglish.io/blog/using-sqlite-with-next-js-13) is pre-installed. Configure it, or another sql database, to save data about the leaderboard.
+- Finish the started api/leaderboard endpoint, to send updates to the database.
+HINT: Use an 'arcade' style leaderboard, where you enter a name at the end of the game and send the name to the endpoint.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### BONUS
 
-## Deploy on Vercel
+    
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Quickstart
+- Make sure you have **node** installed
+- `npm i`
+- `npm run dev`
