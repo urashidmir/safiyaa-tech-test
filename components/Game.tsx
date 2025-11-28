@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
 import Board from "@/components/Board";
@@ -10,10 +9,12 @@ import NameForm from "@/components/NameForm";
 import { initBoard } from "@/utils/initBoard";
 import { calculateWinner } from "@/utils/calculateWinner";
 
-export default function Page() {
-  const searchParams = useSearchParams();
-  const size = Number(searchParams.get("size") ?? 3);
+type GameProps = {
+  size: number;
+  onReset: () => void; 
+};
 
+export default function Game({ size, onReset }: GameProps) {
   const [board, setBoard] = useState<string[]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
   const [winner, setWinner] = useState<string | null>(null);
@@ -23,7 +24,7 @@ export default function Page() {
 
 
   useEffect(() => {
-    setBoard(Array(size * size).fill(""));
+    setBoard(initBoard(size));
     setCurrentPlayer("X");
     setWinner(null);
     setPlayerName("");
@@ -70,9 +71,9 @@ export default function Page() {
 
   return (
     <div className="flex flex-col items-center mt-10 gap-6">
-      <h1 className="text-4xl font-bold tracking-wide text-slate-800">
-        Tic Tac Toe
-      </h1>
+      <h2 className="text-3xl font-bold text-slate-800">
+        Board Size: {size} × {size}
+      </h2>
 
       <WinnerBanner winner={winner} currentPlayer={currentPlayer} />
 
@@ -90,7 +91,14 @@ export default function Page() {
         onClick={resetGame}
         className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
       >
-        New Game
+        Restart Game
+      </button>
+
+      <button
+        onClick={onReset}
+        className="mt-2 px-4 py-1 text-slate-600 underline hover:text-slate-800"
+      >
+        Change Board Size
       </button>
     </div>
   );
