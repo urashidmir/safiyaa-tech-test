@@ -4,13 +4,13 @@ import { useState } from "react";
 import Game from "@/components/Game";
 
 export default function Page() {
-  const [size, setSize] = useState<number | null>(null);
+  const [size, setSize] = useState<number>(3)     
+  const [showGame, setShowGame] = useState(false) 
 
   return (
     <div className="flex flex-col items-center mt-12">
-
-      {/* If no size selected → show size selector */}
-      {!size && (
+      
+      {!showGame && (
         <div className="flex flex-col items-center gap-6">
           <h1 className="text-4xl font-bold tracking-wide text-slate-800">
             Tic Tac Toe
@@ -24,29 +24,27 @@ export default function Page() {
             type="number"
             min={3}
             max={15}
-            placeholder="3"
-            className="border p-2 w-24 text-center rounded"
+            value={size}
             onChange={(e) => {
-              const v = Number(e.target.value);
-              if (v >= 3 && v <= 15) setSize(v);
+              const v = Number(e.target.value)
+              if (v >= 3 && v <= 15) setSize(v)
             }}
+            className="border p-2 w-24 text-center rounded"
           />
 
           <button
-            onClick={() => size && setSize(size)}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition disabled:opacity-50"
-            disabled={!size}
+            onClick={() => setShowGame(true)}
+            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
           >
             Start Game
           </button>
         </div>
       )}
 
-      {/* If size selected → render game */}
-      {size && (
+      {showGame && (
         <Game
           size={size}
-          onReset={() => setSize(null)} // back to selector
+          onReset={() => setShowGame(false)}
         />
       )}
     </div>
