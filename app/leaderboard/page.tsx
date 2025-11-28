@@ -4,21 +4,45 @@ export default async function Page() {
   const response = await fetch(`${baseUrl}/api/leaderboard`, {
     cache: "no-store",
   });
+
   const leaderboardData = await response.json();
 
-  console.log(leaderboardData);
-
   return (
-    <div className="flex-col mt-10">
-      <div className="flex flex-col items-center flex-1">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-wide text-slate-800">
-          Leaderboard
-        </h1>
-      </div>
-      <div className="flex flex-col items-center gap-4 flex-1 mt-10">
-        <div className="font-bold text-l">1. You</div>
-        <div className="font-bold text-l">2. Not you</div>
-        <div className="font-bold text-l">3. Also not you</div>
+    <div className="mt-10 flex flex-col items-center">
+      <h1 className="text-4xl font-extrabold tracking-wide text-slate-800">
+        Leaderboard
+      </h1>
+
+      <div className="mt-8 w-full max-w-md bg-white shadow-md rounded-lg border border-slate-300">
+        <div className="grid grid-cols-3 font-bold text-slate-700 text-lg border-b p-3 bg-slate-100">
+          <div>#</div>
+          <div>Name</div>
+          <div>Result</div>
+        </div>
+
+        {leaderboardData.length === 0 && (
+          <div className="text-center text-slate-500 py-6">
+            No results yet
+          </div>
+        )}
+
+        {leaderboardData.map(
+          (
+            entry: { id: number; name: string; result: string },
+            idx: number
+          ) => (
+            <div
+              key={entry.id}
+              className={`grid grid-cols-3 p-3 text-slate-800 ${
+                idx % 2 === 0 ? "bg-slate-50" : "bg-white"
+              }`}
+            >
+              <div>{idx + 1}</div>
+              <div className="uppercase font-semibold">{entry.name}</div>
+              <div>{entry.result}</div>
+            </div>
+          )
+        )}
       </div>
     </div>
   );

@@ -1,18 +1,30 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { getLeaderboard, insertScore } from "@/lib/queries";
 
-const leaderboardData = [
-  { id: 1, name: 'Alice', score: 1500 },
-  { id: 2, name: 'Bob', score: 1200 },
-  { id: 3, name: 'Charlie', score: 1000 },
-];
-
-// GET /api/leaderboard
 export async function GET() {
-  return NextResponse.json({
-    success: true,
-    data: leaderboardData,
-  });
+  const rows = await getLeaderboard();
+  return NextResponse.json(rows);
 }
 
-// POST /api/leaderboard
+export async function POST(req: Request) {
+  try {
+    const { name, result } = await req.json();
 
+    if (!name || !result) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    await insertScore(name, result);
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json(
+      { error: "Failed to insert leaderboard entry" },
+      { status: 500 }
+    );
+  }
+}
